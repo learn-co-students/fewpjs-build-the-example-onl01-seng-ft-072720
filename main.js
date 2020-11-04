@@ -2,7 +2,7 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 const likeButtons = document.querySelectorAll(".like");
-let likeSwitch = false;
+const errorBar = document.querySelector("#modal");
 
 window.addEventListener('DOMContentLoaded', (event) => {
   likeButtons.forEach(button => {
@@ -15,26 +15,42 @@ window.addEventListener('DOMContentLoaded', (event) => {
 function like(e) {
   const glyph = e.target;
 
-  // do after fetch
-  animateLike(glyph);
-
-
-  //   mimicServerCall()
+  mimicServerCall()
+  .then(resp => {
+    if (resp == "Pretend remote server notified of action!") {
+      animateLike(glyph)
+    }
+    })
+    
+    .catch(error => {
+      errorBar.innerText = error;
+      errorBar.classList.remove("hidden")
+      setTimeout(function() {
+        errorBar.classList.add("hidden")
+      }, 5000)
+    })
 
 }
 
 function animateLike(glyph) {
     if (glyph.matches(".like-glyph")) {
       if (glyph.innerText == FULL_HEART) {
-        return glyph.innerText = EMPTY_HEART;
+        glyph.classList.remove("activated-heart");
+        glyph.innerText = EMPTY_HEART;
       } else {
-        return glyph.innerText = FULL_HEART;
+        glyph.classList.add("activated-heart");
+        glyph.innerText = FULL_HEART;
+        return;
       }
     } else {
       if (glyph.querySelector(".like-glyph").innerText == FULL_HEART) {
-        return glyph.querySelector(".like-glyph").innerText = EMPTY_HEART;
+        glyph.querySelector(".like-glyph").classList.remove("activated-heart");
+        glyph.querySelector(".like-glyph").innerText = EMPTY_HEART;
+        return;
       } else {
-        return glyph.querySelector(".like-glyph").innerText = FULL_HEART;
+        glyph.querySelector(".like-glyph").classList.add("activated-heart");
+        glyph.querySelector(".like-glyph").innerText = FULL_HEART;
+        return;
       }
     }
   }
