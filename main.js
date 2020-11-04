@@ -1,10 +1,43 @@
 // Defining text characters for the empty and full hearts for you to use later.
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
+const likeButtons = document.querySelectorAll(".like");
+let likeSwitch = false;
 
-// Your JavaScript code goes here!
+window.addEventListener('DOMContentLoaded', (event) => {
+  likeButtons.forEach(button => {
+    button.addEventListener("click", like)
+  })
+});
 
 
+
+function like(e) {
+  const glyph = e.target;
+
+  // do after fetch
+  animateLike(glyph);
+
+
+  //   mimicServerCall()
+
+}
+
+function animateLike(glyph) {
+    if (glyph.matches(".like-glyph")) {
+      if (glyph.innerText == FULL_HEART) {
+        return glyph.innerText = EMPTY_HEART;
+      } else {
+        return glyph.innerText = FULL_HEART;
+      }
+    } else {
+      if (glyph.querySelector(".like-glyph").innerText == FULL_HEART) {
+        return glyph.querySelector(".like-glyph").innerText = EMPTY_HEART;
+      } else {
+        return glyph.querySelector(".like-glyph").innerText = FULL_HEART;
+      }
+    }
+  }
 
 
 //------------------------------------------------------------------------------
