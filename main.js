@@ -4,29 +4,48 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
-let likes = document.querySelectorAll('.like-glyph')
+// let likes = document.querySelectorAll('.like-glyph')
 
-for (heart of likes) {
-  heart.addEventListener('click', addLike)
-}
+// for (heart of likes) {
+//   heart.addEventListener('click', addLike)
+// }
 
-function addLike(event) {
-  targetHeart = event.target;
+// function addLike(event) {
+//   targetHeart = event.target;
 
-  mimicServerCall()
-    .then(function (response) {
-      targetHeart.classList.add('activated-heart')
-      targetHeart.textContent = FULL_HEART;
+//   mimicServerCall()
+//     .then(function (response) {
+//       targetHeart.classList.add('activated-heart')
+//       targetHeart.textContent = FULL_HEART;
+//     })
+//     .catch(function (error) {
+//       document.querySelector('#modal').classList.remove('hidden')
+//       setTimeout(function () {
+//         document.querySelector('#modal').classList.add('hidden')
+//       }, 5000)
+//     });
+// }
+
+const modal = document.getElementById('modal')
+const likeButtons = document.getElementsByClassName('like-glyph')
+
+
+modal.className = "hidden"
+
+for (const heart of likeButtons) {
+  heart.addEventListener('click', () => {
+    mimicServerCall()
+    .then(()=> {
+      heart.className = "activated-heart"
     })
-    .catch(function (error) {
-      document.querySelector('#modal').classList.remove('hidden')
-      setTimeout(function () {
-        document.querySelector('#modal').classList.add('hidden')
-      }, 5000)
-    });
+    .catch(() => {
+      modal.style.visibility = "visible"
+    })
+  })
 }
+document.addEventListener('DOMContentLoaded', function() {
 
-
+})
 
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
